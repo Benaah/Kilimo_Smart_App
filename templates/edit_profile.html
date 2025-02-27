@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile - {{ username }}{% endblock %}
+
+{% block content %}
+<div class="container profile-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="profile-card">
+                <h2 class="text-center">Edit Profile</h2>
+                <hr>
+                
+                <!-- Profile picture section -->
+                <div class="text-center mb-4">
+                    <!-- Keep the profile picture upload form separate -->
+                    <form id="pic-upload-form" method="POST" action="{{ url_for('edit_profile_pic') }}" enctype="multipart/form-data">
+                        <div class="profile-pic-wrapper">
+                            <img src="{{ user.profile_pic|default(url_for('static', filename='images/default-profile.png')) }}" 
+                                 alt="Profile Picture" 
+                                 class="profile-pic" 
+                                 id="preview-pic">
+                            <div class="pic-overlay">
+                                <label for="profile-pic-upload" class="upload-btn">
+                                    <i class="fas fa-camera"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="file" 
+                               id="profile-pic-upload" 
+                               name="profile_pic" 
+                               accept="image/*" 
+                               style="display: none;">
+                    </form>
+                </div>
+
+                <!-- Main profile form -->
+                <form method="POST" action="{{ url_for('edit_profile', username=username) }}">
+                    <!-- Username field -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" readonly>
+                        <small class="text-muted">Username cannot be changed</small>
+                    </div>
+
+                    <!-- Location field -->
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" value="{{ user.location }}" required>
+                    </div>
+
+                    <!-- Farming type field -->
+                    <div class="mb-3">
+                        <label for="farming_type" class="form-label">Type of Farming</label>
+                        <select class="form-select" id="farming_type" name="farming_type" required>
+                            <option value="">Select farming type</option>
+                            <option value="Crop Farming" {% if user.farming_type == 'Crop Farming' %}selected{% endif %}>Crop Farming</option>
+                            <option value="Livestock Farming" {% if user.farming_type == 'Livestock Farming' %}selected{% endif %}>Livestock Farming</option>
+                            <option value="Mixed Farming" {% if user.farming_type == 'Mixed Farming' %}selected{% endif %}>Mixed Farming</option>
+                            <option value="Aquaculture" {% if user.farming_type == 'Aquaculture' %}selected{% endif %}>Aquaculture</option>
+                            <option value="Other" {% if user.farming_type == 'Other' %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Update phone number input field -->
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <div class="input-group">
+                            <span class="input-group-text">+254</span>
+                            <input type="tel" 
+                                   class="form-control" 
+                                   id="phone_number" 
+                                   name="phone_number" 
+                                   value="{{ user.phone_number[4:] if user.phone_number and user.phone_number.startswith('+254') else '' }}"
+                                   pattern="^[71][0-9]{8}$"
+                                   placeholder="7XX XXX XXX or 1XX XXX XXX"
+                                   title="Please enter a valid Kenyan phone number starting with 7 or 1">
+                        </div>
+                        <small class="text-muted">Enter your phone number without the country code</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="current_password" name="current_password">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('current_password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="new_password" name="new_password">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('new_password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm New Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirm_password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <a href="{{ url_for('profile') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = event.currentTarget.querySelector('i');
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    // Profile picture preview and upload
+    document.getElementById('profile-pic-upload').addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                document.getElementById('preview-pic').src = e.target.result;
+            }
+            
+            reader.readAsDataURL(this.files[0]);
+            document.getElementById('pic-upload-form').submit();
+        }
+    });
+
+    // Replace the existing phone number validation script
+    document.getElementById('phone_number').addEventListener('input', function(e) {
+        const input = e.target;
+        const value = input.value.replace(/\D/g, ''); // Remove non-digits
+        
+        if (value.length > 9) {
+            input.value = value.slice(0, 9); // Limit to 9 digits
+        } else {
+            input.value = value;
+        }
+        
+        // Updated regex to validate both 7XX and 1XX formats
+        if (value.length === 9 && /^[71][0-9]{8}$/.test(value)) {
+            input.classList.remove('is-invalid');
+            input.classList.add('is-valid');
+        } else {
+            input.classList.remove('is-valid');
+            input.classList.add('is-invalid');
+        }
+    });
+</script>
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    .profile-pic-wrapper {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
+
+    .profile-pic {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .pic-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 8px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .profile-pic-wrapper:hover .pic-overlay {
+        opacity: 1;
+    }
+
+    .upload-btn {
+        color: white;
+        cursor: pointer;
+        display: block;
+        text-align: center;
+    }
+
+    .upload-btn:hover {
+        color: #28a745;
+    }
+
+    .form-select {
+        border-radius: 0.25rem;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border: 1px solid #ced4da;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .form-select:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    .text-muted {
+        font-size: 0.875em;
+        color: #6c757d !important;
+    }
+
+    .input-group-text {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
+    }
+
+    input[type="tel"]:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    input[type="tel"].is-invalid {
+        border-color: #dc3545;
+    }
+</style>
+{% endblock %}

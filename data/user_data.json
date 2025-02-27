@@ -1,0 +1,53 @@
+{
+    "benaah": {
+        "password": "scrypt:32768:8:1$rmwqUe9xDuPAtwou$46ba85b9ea03a39feb6f0131020f8583dfa0cee8b2164b344efea325f54cc63a589bb8c55e94551272df1d58499e5eaeec720acfc166ba129a8db961e748634e",
+        "created_at": "2025-02-25T18:19:02.204418"
+    },
+    "admin": {
+        "password": "scrypt:32768:8:1$4bCIrbWgc1Mt7iA4$8a40f95dee9ab14c128d63f5a080d0e3001cdb329792cb540eeeeae7f7eab4dcdcfa424f8fffbb912ec1a4de44727abaa7a2258bcb5ef31c5b74e6ddde8c463b",
+        "created_at": "2025-02-25T18:28:09.581125",
+        "gender": "Male",
+        "location": "Ustakejua",
+        "farming_type": "Other",
+        "phone_number": "+254712345678",
+        "profile_pic": "uploads/1.jpg"
+    },
+    "wuz": {
+        "password": "scrypt:32768:8:1$ALhKtaiWfKVY2oru$0733e6fa854a13160fc76fd2fa63981e372dc93472c0f28915266256fde9f4dde62335a8be45b3fd7e06ed80e05a8fd0e06a1d3ab81bf5fef9b7c31ace7ca557",
+        "created_at": "2025-02-25T22:09:13.296114",
+        "gender": "Male",
+        "location": "Mabatini",
+        "farming_type": "Mixed Farming",
+        "phone_number": "+254100000000",
+        "profile_pic": "uploads/toyota-corolla-fielder-e160-2017-facelift-200.jpg"
+    },
+    "Benard": {
+        "password": "scrypt:32768:8:1$lIv9T8wGKp9V5vGa$e93a2272609e8f007725e0ef1f7cd7d2f521b1ff856f4ec1f1e0387828e1efd52b268978453af9d3728b6476253739777e79b1cc2d003a42a49351bf09381e08",
+        "created_at": "2025-02-26T13:51:05.106604",
+        "gender": "Male",
+        "location": "420",
+        "farming_type": "Crop Farming",
+        "profile_pic": "uploads/e8063dd7-05b5-45fa-bffc-02a3c5dbb28d.jpeg",
+        "phone_number": "+254710989029"
+    },
+    "Onyango": {
+        "username": "Onyango",
+        "password": "scrypt:32768:8:1$BYv7D5WPgU2IVwzh$a30c8738ac3f279d29a41dfeb610a6f24516f01e59c0cc6a4e573f39aa105247ad5235fb0416a1ae37962abfb5d9330d7fb3be35408033a9d279bbbe557cc41b",
+        "gender": "Not specified",
+        "location": "wuz",
+        "farming_type": "Mixed Farming",
+        "created_at": "2025-02-26 20:53:11",
+        "profile_pic": "uploads/423677fa-0d3c-4bb6-9f87-5eec744c55fc.jpeg",
+        "phone_number": "+254772900485"
+    },
+    "Fatma": {
+        "username": "Fatma",
+        "password": "scrypt:32768:8:1$A6TM0s4jWA7n5vbP$a8f3ef6767f28975f55f9a7cbcdf23d139ec1a2d66d574dbca6e03b918c288d3b57b0e580540ff318080170e49d18d81e637e978bb914969c50237b99647dbec",
+        "gender": "Female",
+        "location": "Mombasa",
+        "farming_type": "Aquaculture",
+        "phone_number": "+254772900485",
+        "created_at": "2025-02-26 23:56:38",
+        "profile_pic": null
+    }
+}

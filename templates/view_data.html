@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Your Farming Data - Kilimo Smart{% endblock  %}
+
+{% block content %}
+    <h1>Your Farming Data</h1>
+    <table border="1">
+        <tr>
+            <th>Crop Name</th>
+            <th>Planting Date</th>
+            <th>Harvest Date</th>
+            <th>Notes</th>
+            <th>Action</th>
+        </tr>
+        {% for entry in data %}
+        <tr>
+            <td>{{ entry[2] }}</td>
+            <td>{{ entry[3] }}</td>
+            <td>{{ entry[4] }}</td>
+            <td>{{ entry[5] }}</td>
+            <td><a href="{{ url_for('delete_data', id=entry[0]) }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+{% endblock %}

@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    .content-container {
+        background:Transparent !important; /* Transparent background */
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+    .card {
+        background: rgba(183, 233, 183, 0.95);
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .card-body {
+        padding: 1.5rem;
+    }
+    .card-title {
+        color: #28a745;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .card-text {
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #218838;
+        border-color: #218838;
+        transform: scale(1.1);
+    }
+    .welcome-header {
+        color:rgb(255, 255, 255);
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    .welcome-text {
+        color: #666;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    @media (max-width: 768px) {
+        .content-container {
+            padding: 15px;
+            margin-top: 1rem;
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .welcome-header {
+            font-size: 2rem;
+        }
+    }
+
+    /* Hamburger button styles */
+    .navbar-toggler {
+        padding: 0.5rem;
+        font-size: 0.5rem;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .navbar-toggler-icon {
+        width: 1.25em;
+        height: 1.25em;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2840, 167, 69, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        transition: background-image 0.3s ease;
+    }
+
+    .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2840, 167, 69, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M6 6L24 24M24 6L6 24'/%3e%3c/svg%3e");
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    /* Updated Navbar Styles */
+    .navbar {
+        background: Transparent;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(40, 167, 69, 0.2);
+    }
+
+    .navbar-brand, .nav-link {
+        color:rgb(0, 0, 0) !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover, .nav-link:hover {
+        color:rgb(0, 231, 69) !important;
+        transform: translateY(-2px);
+    }
+
+    .dropdown-menu {
+        background: rgba(183, 233, 183, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(40, 167, 69, 0.2);
+    }
+
+    .dropdown-item {
+        color: #28a745;
+        transition: all 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+        background: rgba(40, 167, 69, 0.1);
+        color: #218838;
+        transform: translateX(5px);
+    }
+</style>
+
+<!-- Remove the body background style since it's handled in base.html -->
+
+<div class="container content-container">
+    <h1 class="welcome-header">Welcome, {{ username }}!</h1>
+    <div class="row">
+       <div class="row g-4">
+        <!-- Feature Cards -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Soil Mapping by Region</h5>
+                    <p class="card-text">Explore soil types and characteristics in different regions.</p>
+                    <a href="{{ url_for('soil_mapping') }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Multi-Language Support</h5>
+                    <p class="card-text">Access the platform in multiple languages for better understanding.</p>
+                    <a href="#" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Voice Interface for Non-Readers/Writers</h5>
+                    <p class="card-text">Use voice commands to interact with the platform.</p>
+                    <a href="{{ url_for('voice_command') }}" class="btn btn-primary">Voice Assistant</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Daily Weather Updates</h5>
+                    <p class="card-text">Get daily weather updates and crop recommendations.</p>
+                    <a href="{{ url_for('daily_weather') }}" class="btn btn-primary">Get Updates</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Land Leasing/Renting Options</h5>
+                    <p class="card-text">Find and lease/rent land for farming.</p>
+                    <a href="{{ url_for('land_leasing') }}" class="btn btn-primary">Lease/Rent Land</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">AI-Powered Crop Disease Identification</h5>
+                    <p class="card-text">Identify crop diseases using AI-powered tools.</p>
+                    <a href="{{ url_for('crop_disease') }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Buy/Sell Marketplace</h5>
+                    <p class="card-text">Buy and sell farming products in the marketplace.</p>
+                    <a href="{{ url_for('marketplace') }}" class="btn btn-primary">Open Marketplace</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Profile</h5>
+                    <p class="card-text">View and edit your profile information</p>
+                    <a href="{{ url_for('profile') }}" class="btn btn-primary">Go to Profile</a>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+
+<script>
+    document.querySelector('.navbar-toggler').addEventListener('click', function() {
+        this.classList.toggle('transformed');
+    });
+</script>
+
+{% endblock %}

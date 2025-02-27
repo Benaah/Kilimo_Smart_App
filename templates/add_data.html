@@ -1,0 +1,21 @@
+{%extends "base.html"%}
+
+{% block title %}Add Farming Data - Kilimo Smart{% endblock %}
+
+{% block content %}
+<body>
+    <h1>Add Farming Data</h1>
+    <form method="POST">
+        <label for="crop_name">Crop Name:</label>
+        <input type="text" id="crop_name" name="crop_name" required><br><br>
+        <label for="planting_date">Planting Date:</label>
+        <input type="date" id="planting_date" name="planting_date" required><br><br>
+        <label for="harvest_date">Harvest Date:</label>
+        <input type="date" id="harvest_date" name="harvest_date"><br><br>
+        <label for="notes">Notes:</label>
+        <textarea id="notes" name="notes"></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+{% endblock %}

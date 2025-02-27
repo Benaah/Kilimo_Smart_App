@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}Voice Command - Kilimo Smart{% endblock %}
+
+{% block content %}
+<div class="voice-command-container">
+    <div class="voice-command-card">
+        <h1 class="title">Voice Assistant</h1>
+        <div class="mic-container">
+            <button id="start-btn" class="mic-button">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+        <p id="status" class="status-text">Press the microphone and speak</p>
+        <div class="commands-help">
+            <h3>Available Commands:</h3>
+            <ul>
+                <li>"Go to dashboard"</li>
+                <li>"Show soil mapping"</li>
+                <li>"Check weather"</li>
+                <li>"Show climate patterns"</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .voice-command-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: Transparent !important;
+        padding: 20px;
+    }
+
+    .voice-command-card {
+        background: gradient linear(rgb(214, 231, 248),rgb(27, 192, 63));
+        padding: 2rem;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+    }
+
+    .title {
+        color: #2c3e50;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        font-weight: 600;
+    }
+
+    .mic-container {
+        margin: 2rem 0;
+    }
+
+    .mic-button {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: none;
+        background: #28a745;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .mic-button:hover {
+        transform: scale(1.05);
+        background: #218838;
+    }
+
+    .mic-button:active {
+        transform: scale(0.95);
+    }
+
+    .mic-button.listening {
+        animation: pulse 1.5s infinite;
+        background: #dc3545;
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+
+    .status-text {
+        color:rgb(255, 255, 255);
+        font-size: 1.1rem;
+        margin: 1rem 0;
+        min-height: 40px;
+    }
+
+    .commands-help {
+        margin-top: 2rem;
+        text-align: left;
+        background:  Transparent;
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+    .commands-help h3 {
+        color:rgb(0, 0, 0);
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .commands-help ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .commands-help li {
+        color:rgb(0, 0, 0);
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .commands-help li:last-child {
+        border-bottom: none;
+    }
+
+    @keyframes pulse {
+        0% { 
+            box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); 
+        }
+        70% { 
+            box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); 
+        }
+        100% { 
+            box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); 
+        }
+    }
+
+    .mic-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const startBtn = document.getElementById('start-btn');
+    const statusText = document.getElementById('status');
+    let isListening = false;
+    let recognition = null;
+
+    function initializeSpeechRecognition() {
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = () => {
+                isListening = true;
+                startBtn.classList.add('listening');
+                statusText.textContent = 'Listening...';
+            };
+
+            recognition.onresult = (event) => {
+                const command = event.results[0][0].transcript.toLowerCase();
+                statusText.textContent = `You said: ${command}`;
+
+                // Handle basic navigation commands directly
+                switch(command) {
+                    case 'go to dashboard':
+                        window.location.href = '/dashboard';
+                        return;
+                    case 'show soil mapping':
+                        window.location.href = '/soil-mapping';
+                        return;
+                    case 'check weather':
+                        window.location.href = '/weather';
+                        return;
+                    case 'show climate patterns':
+                        window.location.href = '/climate-patterns';
+                        return;
+                }
+
+                // For other commands, send to server
+                fetch('/voice-command', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ command: command }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    }
+                    if (data.voice_response) {
+                        speak(data.voice_response);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    statusText.textContent = 'An error occurred. Please try again.';
+                });
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                statusText.textContent = `Error: ${event.error}`;
+                isListening = false;
+                startBtn.classList.remove('listening');
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                startBtn.classList.remove('listening');
+                statusText.textContent = 'Press the microphone and speak';
+            };
+
+            return true;
+        }
+        return false;
+    }
+
+    // Initialize speech recognition
+    if (!initializeSpeechRecognition()) {
+        statusText.textContent = 'Sorry, your browser does not support speech recognition.';
+        startBtn.disabled = true;
+    }
+
+    // Handle button click
+    startBtn.addEventListener('click', () => {
+        if (!isListening && recognition) {
+            try {
+                recognition.start();
+            } catch (error) {
+                console.error('Speech recognition error:', error);
+                statusText.textContent = 'An error occurred. Please try again.';
+            }
+        }
+    });
+
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+
+            utterance.onstart = () => {
+                statusText.textContent = 'Speaking...';
+            };
+            
+            utterance.onend = () => {
+                statusText.textContent = 'Press the microphone and speak';
+            };
+
+            utterance.onerror = (event) => {
+                console.error('Speech synthesis error:', event.error);
+                statusText.textContent = 'Error in speech synthesis';
+            };
+
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert('Sorry, your browser does not support text-to-speech.');
+        }
+    }
+</script>
+{% endblock %}

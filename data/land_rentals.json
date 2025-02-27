@@ -1,0 +1,104 @@
+[
+    {
+        "location": "Nakuru",
+        "size": "100",
+        "price": "1500000",
+        "description": "Expensive",
+        "contact": "epea357@gmail.com",
+        "owner": "wuz",
+        "created_at": "2025-02-26T12:50:25.768471",
+        "image": "background.jpg"
+    },
+    {
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "100",
+        "price": "2500000",
+        "description": "Fertile land for any crops!",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T19:42:59.064232",
+        "image": "1670791702231.jpg"
+    },
+    {
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "100",
+        "price": "2500000",
+        "description": "Fertile land for any crops!",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T19:47:26.085527",
+        "image": "1670791702231.jpg"
+    },
+    {
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "100",
+        "price": "2500000",
+        "description": "Fertile land for any crops!",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T19:47:29.809370",
+        "image": "1670791702231.jpg"
+    },
+    {
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "100",
+        "price": "2500000",
+        "description": "Fertile land for any crops!",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T19:47:35.643882",
+        "image": "1670791702231.jpg"
+    },
+    {
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "100",
+        "price": "2500000",
+        "description": "Fertile land for any crops!",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T19:50:19.291048",
+        "image": "1670791702231.jpg"
+    },
+    {
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "99",
+        "price": "1999999",
+        "description": "Fertile black cotton soil.",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T19:51:02.069566",
+        "image": "1670791702231.jpg"
+    },
+    {
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "99",
+        "price": "1999999",
+        "description": "Fertile black cotton soil.",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T19:53:24.257638",
+        "image": "1670791702231.jpg"
+    },
+    {
+        "id": "725a2684-8a49-4d30-a2e1-a523a693623e",
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "100",
+        "price": "199999",
+        "description": "Black-cotton fertile soils.",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T19:59:33.091243",
+        "image": "1670791702231.jpg"
+    },
+    {
+        "id": "9018a721-e4d1-48a6-a06b-8ee3b9110fbc",
+        "location": "Botanic Garden, Egerton, Nakuru, Kenya",
+        "size": "100",
+        "price": "199999",
+        "description": "Black-cotton fertile soils.",
+        "contact": "epea357@gmail.com",
+        "owner": "Onyango",
+        "created_at": "2025-02-27T20:04:22.397153",
+        "image": "1670791702231.jpg"
+    }
+]

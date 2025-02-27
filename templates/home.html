@@ -1,0 +1,149 @@
+{% extends "base.html"%}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <style>
+        /* Base styles */
+        .overlay {
+            background-color: rgba(234, 245, 235, 0.527);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            overflow-y: auto; /* Added for scrolling on small screens */
+        }
+
+        /* Responsive heading */
+        h1 {
+            color: #168f3a;
+            font-size: clamp(2rem, 5vw, 3rem); /* Responsive font size */
+            text-shadow: 2px 2px 5px rgba(36, 199, 49, 0.7);
+            margin-bottom: 20px;
+            padding: 0 15px;
+        }
+
+        /* Content section */
+        .content {
+            background-color: rgba(18, 75, 21, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(52, 199, 83, 0.2);
+            max-width: 800px;
+            width: 90%; /* Changed from fixed width */
+            margin: 0 auto;
+        }
+
+        .content h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin: 10px 0;
+            text-shadow: 1px 1px 3px rgba(26, 185, 66, 0.5);
+        }
+
+        .content p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            line-height: 1.6;
+            margin: 10px 0;
+            padding: 0 10px;
+        }
+
+        /* Button container */
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap; /* Added for mobile */
+            padding: 0 15px;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: bold;
+            color: #fff;
+            background-color: #207727;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(13, 153, 60, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            min-width: 150px; /* Added minimum width */
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .button:active {
+            transform: scale(1.02);
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            .overlay {
+                position: relative;
+                min-height: 100vh;
+            }
+
+            .content {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .button {
+                width: 80%;
+                max-width: 300px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            h1 {
+                margin-top: 60px; /* Space for fixed navbar */
+            }
+
+            .content {
+                margin-top: 20px;
+            }
+        }
+    </style>
+
+    <!-- Rest of your HTML remains the same -->
+    <div class="overlay">
+        <h1>Welcome to Kilimo Smart</h1>
+        <div class="content">
+            <h2>Our Mission</h2>
+            <p>
+                To revolutionize agriculture by providing farmers with innovative tools and resources, 
+                empowering them to make data-driven decisions for improved productivity and sustainability.
+            </p>
+
+            <h2>Our Aim</h2>
+            <p>
+                Kilimo Smart aims to bridge the gap between technology and agriculture by offering services such as soil mapping, crop recommendations, 
+                disease diagnosis, and an online marketplace for farmers to connect and thrive.
+            </p>
+        </div>
+
+        <!-- Buttons for Sign Up and Log In -->
+        <div class="button-container">
+            <a href="{{ url_for('signup') }}" class="button">Sign Up</a>
+            <a href="{{ url_for('login') }}" class="button">Log In</a>
+        </div>
+    </div>
+{% endblock %}
+

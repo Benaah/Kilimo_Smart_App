@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Soil Mapping - Kilimo Smart{% endblock %}
+
+{% block content %}
+<div class="container content-container">
+    <h1 class="welcome-header">Soil Mapping</h1>
+    <p class="welcome-text">Explore soil types and characteristics in different regions.</p>
+    <!-- Add feature specific content here -->
+</div>
+
+<div class="container map-container">
+    <!-- County Selection Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>Select Your County</h3>
+            <p>Choose your county to view soil and climatic details.</p>
+            <select id="county-select" class="form-select">
+                <option value="" disabled selected>Select a county</option>
+                <script>
+                    // Dynamically generate the options for all 47 counties
+                    const counties = [
+                        "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo-Marakwet", "Embu", "Garissa", "Homa Bay", 
+                        "Isiolo", "Kajiado", "Kakamega", "Kericho", "Kiambu", "Kilifi", "Kirinyaga", "Kisii", 
+                        "Kisumu", "Kitui", "Kwale", "Laikipia", "Lamu", "Machakos", "Makueni", "Mandera", 
+                        "Marsabit", "Meru", "Migori", "Mombasa", "Murang'a", "Nairobi", "Nakuru", "Nandi", 
+                        "Narok", "Nyamira", "Nyandarua", "Nyeri", "Samburu", "Siaya", "Taita-Taveta", 
+                        "Tana River", "Tharaka-Nithi", "Trans Nzoia", "Turkana", "Uasin Gishu", "Vihiga", 
+                        "Wajir", "West Pokot"
+                    ];
+
+                    counties.forEach(county => {
+                        document.write(`<option value="${county}">${county}</option>`);
+                    });
+                </script>
+            </select>
+        </div>
+    </div>
+
+    <!-- Soil and Climate Information -->
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Soil Information -->
+            <div class="recommendation-card">
+                <h4>Soil Information</h4>
+                <p><strong>County:</strong> <span id="county-name">-</span></p>
+                <p><strong>Soil Type:</strong> <span id="soil-type">-</span></p>
+                <p><strong>pH Level:</strong> <span id="ph-level">-</span></p>
+                <p><strong>Nutrient Content:</strong> <span id="nutrient-content">-</span></p>
+                <p><strong>Characteristics:</strong> <span id="soil-characteristics">-</span></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <!-- Climate Information -->
+            <div class="recommendation-card">
+                <h4>Climatic Conditions</h4>
+                <p><strong>Rainfall:</strong> <span id="rainfall">-</span></p>
+                <p><strong>Temperature:</strong> <span id="temperature">-</span></p>
+                <h4>Recommended Crops</h4>
+                <ul id="crop-recommendations">
+                    <li>-</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4 text-center">
+            <a href="/dashboard" class="btn btn-outline-primary w-100">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Kilimo Smart. All rights reserved.</p>
+</footer>
+
+<script>
+    // Example JavaScript for dynamic updates
+    const countyData = {
+        "Nairobi": {
+            soilType: "Loamy",
+            pH: "6.8",
+            nutrients: "High Nitrogen, Moderate Phosphorus",
+            characteristics: "Well-drained, suitable for horticulture",
+            rainfall: "800-1200 mm per year",
+            temperature: "15-26°C",
+            crops: ["Kale", "Spinach", "Tomatoes"]
+        },
+        "Mombasa": {
+            soilType: "Sandy",
+            pH: "7.0",
+            nutrients: "Low Nitrogen, High Potassium",
+            characteristics: "Loose texture, good drainage but low fertility",
+            rainfall: "600-1100 mm per year",
+            temperature: "24-32°C",
+            crops: ["Coconuts", "Cassava", "Cashew Nuts"]
+        },
+        // Add all other counties and their data similarly
+    };
+
+    document.getElementById("county-select").addEventListener("change", function () {
+        const selectedCounty = this.value;
+        updateSoilData(selectedCounty);
+    });
+
+    function updateSoilData(county) {
+        const data = countyData[county] || {};
+        document.getElementById("county-name").textContent = county;
+        document.getElementById("soil-type").textContent = data.soilType || "-";
+        document.getElementById("ph-level").textContent = data.pH || "-";
+        document.getElementById("nutrient-content").textContent = data.nutrients || "-";
+        document.getElementById("soil-characteristics").textContent = data.characteristics || "-";
+        document.getElementById("rainfall").textContent = data.rainfall || "-";
+        document.getElementById("temperature").textContent = data.temperature || "-";
+
+        const cropList = document.getElementById("crop-recommendations");
+        cropList.innerHTML = "";
+        (data.crops || ["-"]).forEach(crop => {
+            const li = document.createElement("li");
+            li.textContent = crop;
+            cropList.appendChild(li);
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Land Leasing - Kilimo Smart{% endblock %}
+
+{% block content %}
+<style>
+    .leasing-container {
+        max-width: 800px;
+        margin: 2rem auto;
+    }
+    .form-card {
+        background: transparent !important;
+        border-radius: 15px;
+        padding: 2rem;
+    }
+    .header {
+        background-color: #28a745;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container leasing-container">
+    <div class="header">
+        <h1>Land Leasing</h1>
+        <p>List your land for lease or find land to rent</p>
+    </div>
+
+    <div class="form-card">
+        <form id="landLeasingForm" action="{{ url_for('submit_land') }}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="landPicture" class="form-label">Upload Land Pictures</label>
+                <input type="file" class="form-control" id="landPicture" name="landPicture" accept="image/*" multiple required>
+            </div>
+
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location" 
+                    placeholder="e.g., Nakuru County, Kenya" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="size" class="form-label">Land Size (Acres)</label>
+                <input type="number" class="form-control" id="size" name="size" 
+                    placeholder="Enter land size" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Price per Month (KES)</label>
+                <input type="number" class="form-control" id="price" name="price" 
+                    placeholder="Enter monthly rent" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" 
+                    rows="3" placeholder="Describe your land, soil type, water access, etc." required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="contact" class="form-label">Contact Information</label>
+                <input type="text" class="form-control" id="contact" name="contact" 
+                    placeholder="Your phone number or email" required>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success">Submit Listing</button>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add this somewhere in your template for debugging -->
+{% if land_rentals %}
+    <div class="d-none">
+        Debug: {{ land_rentals|length }} listings loaded
+    </div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('landLeasingForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        try {
+            const formData = new FormData(this);
+            const response = await fetch("{{ url_for('submit_land') }}", {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log('Server response:', data); // Debug logging
+            
+            if (data.success) {
+                alert(data.message);
+                window.location.replace(data.redirect);
+            } else {
+                alert(data.message || 'Error submitting listing');
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
+</script>
+{% endblock %}
